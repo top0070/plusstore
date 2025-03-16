@@ -3,24 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>네이버 지도 앱 실행하기</title>
+  <title>네이버 이동</title>
+  <style>
+    .naver-button {
+      background-color: #2DB400;
+      color: #FFFFFF;
+      font-weight: bold;
+      font-size: 1.5em;
+      padding: 15px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .naver-button:hover {
+      background-color: #000070;
+    }
+  </style>
   <script>
     function openNaverMap() {
       var now = new Date().getTime();
-      var fallbackUrl = "https://play.google.com/store/apps/details?id=com.nhn.android.nmap";
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      var deepLinkURL = "";
+      var fallbackUrl = "";
+
+      // iOS 기기 확인
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        // iOS 딥링크 (예: nmap://)
+        deepLinkURL = "nmap://map?&appname=com.example.myapp";
+        // iOS fallback (App Store에서 네이버 지도 앱 페이지 URL로 변경)
+        fallbackUrl = "https://apps.apple.com/kr/app/naver-map/id311867728"; 
+      } else {
+        // Android 딥링크
+        deepLinkURL = "intent://plusstore/home#Intent;scheme=naverplusstore;package=com.navercorp.navershopping;end";
+        // Android fallback (구글 플레이스토어 네이버 지도 앱 페이지)
+        fallbackUrl = "https://play.google.com/store/apps/details?id=com.navercorp.navershopping";
+      }
+
+      // 딥링크 실행 후 일정 시간 내 앱이 실행되지 않으면 fallback URL로 이동
       setTimeout(function () {
         var newTime = new Date().getTime();
         if (newTime - now < 1500) {
           window.location.href = fallbackUrl;
         }
       }, 1000);
-      window.location.href = "intent://actionPath?parameter=value&appname=com.example.myapp#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;end";
+
+      // 딥링크 실행
+      window.location.href = deepLinkURL;
     }
   </script>
 </head>
 <body>
-  <h1>네이버 지도 앱 실행하기</h1>
-  <p>아래 버튼을 클릭하면 네이버 지도 앱이 실행됩니다. 앱이 없으면 앱 다운로드 페이지로 이동합니다.</p>
-  <button onclick="openNaverMap()">네이버 지도 앱 열기</button>
+  <h1>네이버 이동 클릭</h1>
+  <p>아래 버튼을 클릭하면 네이버 지도 앱이 실행됩니다.네이버 지도가 설치되지 않았다면 설치하기로 이동합니다.</p>
+  <button class="naver-button" onclick="openNaverMap()">네이버지도 열기</button>
 </body>
 </html>
