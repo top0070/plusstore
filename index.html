@@ -20,25 +20,25 @@
     }
   </style>
   <script>
-    function openNaverMap() {
+    function openNaverApp() {
       var now = new Date().getTime();
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
       var deepLinkURL = "";
       var fallbackUrl = "";
-
-      // iOS 기기 확인
+      
+      // iOS 기기: 네이버플러스 스토어 앱 딥링크 및 App Store URL 적용
       if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        // iOS 딥링크 (예: nmap://)
-        deepLinkURL = "nmap://map?&appname=com.example.myapp";
-        // iOS fallback (App Store에서 네이버 지도 앱 페이지 URL로 변경)
-        fallbackUrl = "https://apps.apple.com/kr/app/naver-map/id311867728"; 
+        // iOS 딥링크 (앱 스킴: navershopping, 명령어: ns/home, 버전: 1)
+        deepLinkURL = "navershopping://ns/home?version=1";
+        // iOS fallback: 제공된 App Store URL
+        fallbackUrl = "https://apps.apple.com/kr/app/%EB%84%A4%EC%9D%B4%EB%B2%84%ED%94%8C%EB%9F%AC%EC%8A%A4-%EC%8A%A4%ED%86%A0%EC%96%B4/id6738063154";
       } else {
-        // Android 딥링크 (네이버플러스 스토어 앱 딥링크로 변경)
+        // Android 딥링크 (네이버플러스 스토어 앱 딥링크)
         deepLinkURL = "intent://ns/home?version=1#Intent;scheme=navershopping;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.navercorp.navershopping;end;";
-        // Android fallback (구글 플레이스토어 네이버플러스 스토어 앱 페이지)
+        // Android fallback: Google Play 스토어 URL
         fallbackUrl = "https://play.google.com/store/apps/details?id=com.navercorp.navershopping";
       }
-
+      
       // 딥링크 실행 후 일정 시간 내 앱이 실행되지 않으면 fallback URL로 이동
       setTimeout(function () {
         var newTime = new Date().getTime();
@@ -46,7 +46,7 @@
           window.location.href = fallbackUrl;
         }
       }, 1000);
-
+      
       // 딥링크 실행
       window.location.href = deepLinkURL;
     }
@@ -54,7 +54,7 @@
 </head>
 <body>
   <h1>네이버 이동 클릭</h1>
-  <p>아래 버튼을 클릭하면 네이버 지도 또는 네이버플러스 스토어 앱이 실행됩니다. (기기에 따라 올바른 딥링크로 이동합니다.)</p>
-  <button class="naver-button" onclick="openNaverMap()">앱 열기</button>
+  <p>아래 버튼을 클릭하면 네이버플러스 스토어 앱이 실행됩니다. (설치되어있지않다면 설치페이지로 이동됩니다)</p>
+  <button class="naver-button" onclick="openNaverApp()">앱 열기</button>
 </body>
 </html>
