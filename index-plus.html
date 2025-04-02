@@ -6,11 +6,11 @@
   <title>네이버 이동</title>
   <style>
     .naver-button {
-      background-color: #2DB400;
+      background-color: #00008B;
       color: #FFFFFF;
       font-weight: bold;
-      font-size: 1.5em;
-      padding: 15px 15px;
+      font-size: 1.2em;
+      padding: 15px 25px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -33,9 +33,9 @@
         // iOS fallback (App Store에서 네이버 지도 앱 페이지 URL로 변경)
         fallbackUrl = "https://apps.apple.com/kr/app/naver-map/id311867728"; 
       } else {
-        // Android 딥링크
-        deepLinkURL = "intent://plusstore/home#Intent;scheme=naverplusstore;package=com.navercorp.navershopping;end";
-        // Android fallback (구글 플레이스토어 네이버 지도 앱 페이지)
+        // Android 딥링크 (네이버플러스 스토어 앱 딥링크로 변경)
+        deepLinkURL = "intent://ns/home?version=1#Intent;scheme=navershopping;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.navercorp.navershopping;end;";
+        // Android fallback (구글 플레이스토어 네이버플러스 스토어 앱 페이지)
         fallbackUrl = "https://play.google.com/store/apps/details?id=com.navercorp.navershopping";
       }
 
@@ -54,7 +54,7 @@
 </head>
 <body>
   <h1>네이버 이동 클릭</h1>
-  <p>아래 버튼을 클릭하면 네이버 지도 앱이 실행됩니다.네이버 지도가 설치되지 않았다면 설치하기로 이동합니다.</p>
-  <button class="naver-button" onclick="openNaverMap()">네이버지도 열기</button>
+  <p>아래 버튼을 클릭하면 네이버 지도 또는 네이버플러스 스토어 앱이 실행됩니다. (기기에 따라 올바른 딥링크로 이동합니다.)</p>
+  <button class="naver-button" onclick="openNaverMap()">앱 열기</button>
 </body>
 </html>
